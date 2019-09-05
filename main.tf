@@ -19,41 +19,34 @@ locals {
 }
 
 resource "aws_iam_instance_profile" "this" {
-  name = "test_profile"
+  name = "${title(local.name)}InstanceProfile"
   role = aws_iam_role.this.name
 }
 
 data "template_file" "ebs_mount_policy" {
-  template = file("${path.module}/data/ebs_mount_policy.json")
+  template = file("${path.module}/policies/ebs_mount_policy.json")
 //TODO: IAM lockdown
   vars = {
 //    file_system_id = data.terraform_remote_state.efs.outputs.file_system_id
 //    account_id     = data.aws_caller_identity.this.account_id
 //    region         = data.aws_region.current.name
   }
-  tags = local.tags
 }
 
 
 resource "aws_iam_policy" "ebs_mount_policy" {
   name   = "${title(local.name)}EBSPolicy"
   policy = data.template_file.ebs_mount_policy.rendered
-
-  tags = local.tags
 }
 
 resource "aws_iam_role_policy_attachment" "efs_mount_policy" {
   role       = aws_iam_role.this.name
   policy_arn = aws_iam_policy.ebs_mount_policy.arn
-
-  tags = local.tags
 }
 
 resource "aws_iam_role_policy_attachment" "ebs_mount_policy" {
   role       = aws_iam_role.this.name
   policy_arn = aws_iam_policy.ebs_mount_policy.arn
-
-  tags = local.tags
 }
 
 resource "aws_iam_role" "this" {
