@@ -21,8 +21,6 @@ locals {
 resource "aws_iam_instance_profile" "this" {
   name = "test_profile"
   role = aws_iam_role.this.name
-
-  tags = local.tags
 }
 
 data "template_file" "ebs_mount_policy" {

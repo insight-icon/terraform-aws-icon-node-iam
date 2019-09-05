@@ -8,10 +8,6 @@ variable "environment" {
   description = "The environment that generally corresponds to the account you are deploying into."
 }
 
-variable "resource_group" {
-  description = "The grouping that is conventionally used to name resources"
-}
-
 variable "tags" {
   description = "Tags that are appended"
   type        = map(string)
