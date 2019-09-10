@@ -33,7 +33,6 @@ data "template_file" "ebs_mount_policy" {
   }
 }
 
-
 resource "aws_iam_policy" "ebs_mount_policy" {
   name   = "${title(local.name)}EBSPolicy"
   policy = data.template_file.ebs_mount_policy.rendered
