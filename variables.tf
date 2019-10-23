@@ -12,7 +12,3 @@ variable "tags" {
   description = "Tags that are appended"
   type        = map(string)
 }
-
-variable "terraform_state_region" {
-  description = "AWS region used for Terraform states"
-}
